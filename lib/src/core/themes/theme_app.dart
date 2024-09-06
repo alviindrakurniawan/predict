@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scora/src/core/core.dart';
 
-import 'theme_text.dart';
 
 class AppTheme {
   static ThemeData get light => ThemeData(
@@ -10,8 +10,20 @@ class AppTheme {
         ),
 
         // Text Theme
+      scaffoldBackgroundColor: Colors.white,
         primaryTextTheme: AppTextStyle.light,
         textTheme: AppTextStyle.light,
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          selectedItemColor: primaryColor,
+          selectedLabelStyle: AppTextStyle.titleSmall,
+          unselectedLabelStyle: AppTextStyle.titleSmall,
+        ),
+    appBarTheme: AppBarTheme(
+      color: Colors.white,
+      // backgroundColor: Colors.white
+    )
+
+
       );
 
   static ThemeData get dark => ThemeData(
@@ -21,8 +33,14 @@ class AppTheme {
           dynamicSchemeVariant: DynamicSchemeVariant.monochrome,
         ),
 
+
         // Text Theme
         primaryTextTheme: AppTextStyle.dark,
         textTheme: AppTextStyle.dark,
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          selectedItemColor: greenHighlightColor,
+          selectedLabelStyle: AppTextStyle.titleSmall,
+          unselectedLabelStyle: AppTextStyle.titleSmall,
+        ),
       );
 }

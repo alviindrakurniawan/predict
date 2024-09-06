@@ -16,7 +16,7 @@ class MainApp extends HookConsumerWidget {
 
       // Configure the theme based on the themeMode
       theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
+      // darkTheme: AppTheme.dark,
       themeMode: themeMode,
 
       // Configure the router

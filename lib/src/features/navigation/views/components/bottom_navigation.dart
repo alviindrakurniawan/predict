@@ -11,22 +11,34 @@ class NavigationBottomNav extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedIndex = ref.watch(navigationPageProvider);
 
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Gap.circle),
-      ),
-      margin: const EdgeInsets.all(Gap.l),
-      child: NavigationBar(
-        selectedIndex: selectedIndex,
-        onDestinationSelected: (value) =>
-            ref.read(navigationPageProvider.notifier).onDestinationSelected(context, value: value),
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.search), label: 'Search'),
-          NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-      ),
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      currentIndex: selectedIndex,
+      onTap: (value) => ref
+          .read(navigationPageProvider.notifier)
+          .onDestinationSelected(context, value: value),
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home_rounded),
+          label: 'Livescore',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.star),
+          label: 'Predict',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.leaderboard),
+          label: 'Leaderboard',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.task),
+          label: 'Task',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Profile',
+        ),
+      ],
     );
   }
 }

@@ -2,9 +2,9 @@ import 'package:exposed/exposed.dart';
 import 'package:flutter/material.dart';
 
 class Config {
-  static const String appName = 'Riverpod Hooks Template';
+  static const String appName = 'Scora';
   static const String initRoute = '/';
-  static const String fontFamily = 'Roboto';
+  static const String fontFamily = 'Urbanist';
 }
 
 class Endpoint {

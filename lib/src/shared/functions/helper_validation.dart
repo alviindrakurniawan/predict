@@ -1,8 +1,6 @@
-
-
 String? validatePhone(String? value) {
   if (value == null || value.isEmpty) {
-    return "Phone number is Diisi"; // "Number is required"
+    return "Phone is Required";
   } else if (!RegExp(r'^\+\d{1,3}\d{6,12}$').hasMatch(value)) {
     return "Enter The Phone Number in International Format";
   } else {
@@ -12,23 +10,52 @@ String? validatePhone(String? value) {
 
 String? validateEmail(String? value) {
   if (value!.isEmpty) {
-    return "Email Wajib Diisi";
-  } else if (!RegExp(
-      r"^[a-zA-Z\d.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z\d]+\.[a-zA-Z]+")
+    return "Email is Required";
+  } else if (!RegExp(r"^[a-zA-Z\d.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z\d]+\.[a-zA-Z]+")
       .hasMatch(value)) {
     return "Enter The E-mail According to The Format";
   } else {
     return null;
   }
 }
-
-
 String? validatePassword(String? value) {
   if (value!.isEmpty) {
-    return "Passwords Wajib Diisi";
+    return "Password is Required";
   } else if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?\d).{8,}$')
       .hasMatch(value)) {
-    return "Minimum 8 Characters, 1 Capital Letter, 1 Lowercase Letter, 1 Number";
+    return "At least 8 characters, 1 uppercase, 1 lowercase, 1 number";
+  } else {
+    return null;
+  }
+}
+
+
+String? validateConfirmPassword(String? value, String? password) {
+  if (value!.isEmpty) {
+    return "Confirmation Passwords is Required";
+  } else if (value != password) {
+    return "Different from Password";
+  } else if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?\d).{8,}$')
+      .hasMatch(value)) {
+    return "At least 8 characters, 1 uppercase, 1 lowercase, 1 number";
+  } else {
+    return null;
+  }
+}
+
+String? validateUserName(String? value) {
+  if (value!.isEmpty) {
+    return "Username is Required";
+  // } else if (!RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+  //   return "Fill the name with a combination of lowercase and uppercase letters";
+  } else {
+    return null;
+  }
+}
+
+String? validateEmailEmpty(String? value) {
+  if (value!.isEmpty) {
+    return "Please Input Your Email";
   } else {
     return null;
   }

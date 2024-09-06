@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:scora/src/features/leaderboard/views/leaderboard_view.dart';
+import 'package:scora/src/features/predict/views/history_predict.dart';
+import 'package:scora/src/features/task/views/task_view.dart';
 
 import '../../features.dart';
 
@@ -24,11 +27,13 @@ class NavigationPageNotifier extends AutoDisposeNotifier<int> {
       case 0:
         context.go(HomeView.routeName);
       case 1:
-        context.go(SearchView.routeName);
+        context.go(HistoryPredict.routeName);
       case 2:
-        context.go(ProfileView.routeName);
+        context.go(LeaderboardView.routeName);
+      case 3:
+        context.go(TaskView.routeName);
       default:
-        context.go(HomeView.routeName);
+        context.go(ProfileView.routeName);
     }
   }
 }

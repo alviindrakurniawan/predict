@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class _PrefService {
-  const _PrefService();
+class PrefService {
+  const PrefService();
 
   Future<void> setPref(String key, dynamic value) async {
     // Initialize the SharedPreferences
@@ -49,6 +49,6 @@ class _PrefService {
   }
 }
 
-final prefProvider = Provider.autoDispose<_PrefService>((ref) {
-  return const _PrefService();
+final prefProvider = Provider.autoDispose<PrefService>((ref) {
+  return const PrefService();
 });

@@ -1,176 +1,119 @@
-import 'package:exposed/exposed.dart';
+import 'package:exposed/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../../../core/core.dart';
+import 'package:scora/main.dart';
+import 'package:scora/src/features/home/controllers/fixture_controller.dart';
+import 'package:scora/src/features/home/controllers/selected_date_controller.dart';
+import 'package:scora/src/features/home/views/components/date_timeline.dart';
+import 'package:scora/src/features/home/views/components/list_soccer_league.dart';
+import 'package:go_router/go_router.dart';
+import 'package:scora/src/features/home/views/search_view.dart';
 
 class HomeView extends HookConsumerWidget {
   const HomeView({super.key});
 
   static const routeName = '/home';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final slider = useState(.0);
-    final rangeSlider = useState(const RangeValues(.5, 1));
+    final size = MediaQuery.of(context).size;
 
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-          delegate: SliverChildListDelegate([
-            Column(children: [
-              Text('Label Small', style: context.labelSmall),
-              Text('Label Medium', style: context.labelMedium),
-              Text('Label Large', style: context.labelLarge),
-            ]),
-            const Divider().padSymmetric(vert: Gap.s),
-            Column(children: [
-              Text('Body Small', style: context.bodySmall),
-              // By default, it's the same as bodyMedium
-              Text('Body Medium', style: context.bodyMedium),
-              Text('Body Large', style: context.bodyLarge),
-            ]),
-            const Divider().padSymmetric(vert: Gap.s),
-            Column(children: [
-              Text('Title Small', style: context.titleSmall),
-              Text('Title Medium', style: context.titleMedium),
-              Text('Title Large', style: context.titleLarge),
-            ]),
-            const Divider().padSymmetric(vert: Gap.s),
-            Column(children: [
-              Text('Heading Small', style: context.headlineSmall),
-              Text('heading Medium', style: context.headlineMedium),
-              Text('Heading Large', style: context.headlineLarge),
-            ]),
-            const Divider().padSymmetric(vert: Gap.s),
-            Column(children: [
-              Text('Display Small', style: context.displaySmall),
-              Text('Display Medium', style: context.displayMedium),
-              Text('Display Large', style: context.displayLarge),
-            ]),
-            const Divider().padSymmetric(vert: Gap.l),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text('Date Format', style: context.titleMedium),
-                      Text(DateTime.now().format()),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text('Currency Format', style: context.titleMedium),
-                      Text(100.25.toCurrency()),
-                      Text(25.toUSD()),
-                      Text(150000.toIDR()),
-                      Text(25000.toIDR(useSymbol: true)),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const Divider().padSymmetric(vert: Gap.l),
-            Slider(
-              value: slider.value,
-              onChanged: (val) => slider.value = val,
-            ),
-            RangeSlider(
-              values: rangeSlider.value,
-              onChanged: (val) => rangeSlider.value = val,
-            ),
-            const Divider().padSymmetric(vert: Gap.l),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                        label: const Text('Elevated icon'),
-                      ),
-                      FilledButton.tonalIcon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                        label: const Text('Filled tonal icon'),
-                      ),
-                      OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                        label: const Text('Outline icon'),
-                      ),
-                      TextButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                        label: const Text('Text icon'),
-                      ),
-                      IconButton.filledTonal(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                      ),
-                      IconButton.outlined(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                        label: const Text('Elevated icon'),
-                      ),
-                      FilledButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                        label: const Text('Filled icon'),
-                      ),
-                      OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                        label: const Text('Outline icon'),
-                      ),
-                      TextButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                        label: const Text('Text icon'),
-                      ),
-                      IconButton.filled(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                      ),
-                      IconButton.outlined(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const Divider().padSymmetric(vert: Gap.l),
-            const Card(child: ListTile()),
-            const Divider().padSymmetric(vert: Gap.l),
-            TextFormField(),
-            const Divider().padSymmetric(vert: Gap.l),
-            const Card(child: AspectRatio(aspectRatio: 1)),
-          ]),
+    final selectedDateState = ref.watch(selectedDateControllerProvider);
+    final selectedDate = ref.read(selectedDateControllerProvider.notifier);
+    final isLive = useState<bool>(false);
+
+    void handleLiveChange(bool live) {
+      isLive.value = live;
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        scrolledUnderElevation: 0.0,
+        elevation: 0,
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Predict',
+            style: context.headlineSmall,
+            textAlign: TextAlign.left,
+          ),
         ),
-      ],
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, size: 32),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.push(SearchView.routeName);
+            },
+            icon: const Icon(Icons.search, size: 32),
+          ),
+        ],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(70.0), // Adjust the height as needed
+          child: Padding(
+            padding: const EdgeInsets.all(16.0), // Adjust padding as needed
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                // ListFixtureFilter(),
+                const SizedBox(height: 8),
+                RectangularDateTimeline(
+                  initialFocusDate: selectedDateState,
+                  onLiveChange: handleLiveChange,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      drawer: Drawer(
+        width: size.width * 0.6,
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 24, top: 44),
+                child: Text(
+                  'Scora',
+                  style: context.headlineSmall,
+                ),
+              ),
+              const SizedBox(height: 28),
+              ListTile(
+                title: Text('Football', style: context.headlineSmall),
+                leading: const Icon(Icons.sports_soccer, size: 32),
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text('Basketball', style: context.headlineSmall),
+                leading: const Icon(Icons.sports_basketball, size: 32),
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text('Cricket', style: context.headlineSmall),
+                leading: const Icon(Icons.sports_cricket, size: 32),
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text('Tennis', style: context.headlineSmall),
+                leading: const Icon(Icons.sports_tennis, size: 32),
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: ListSoccerLeague(),
     );
   }
 }

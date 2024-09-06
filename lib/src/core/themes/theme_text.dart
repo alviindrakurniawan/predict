@@ -7,21 +7,21 @@ class AppTextStyle {
 
   static TextStyle displayLarge = const TextStyle(
     fontSize: 57,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w700,
     letterSpacing: -0.25,
     height: 64 / 57,
   );
 
   static TextStyle displayMedium = const TextStyle(
-    fontSize: 45,
-    fontWeight: FontWeight.w400,
+    fontSize: 48,
+    fontWeight: FontWeight.w700,
     letterSpacing: 0,
     height: 52 / 45,
   );
 
   static TextStyle displaySmall = const TextStyle(
     fontSize: 36,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w700,
     letterSpacing: 0,
     height: 44 / 36,
   );
@@ -30,21 +30,21 @@ class AppTextStyle {
 
   static TextStyle headlineLarge = const TextStyle(
     fontSize: 32,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w700,
     letterSpacing: 0,
     height: 40 / 32,
   );
 
   static TextStyle headlineMedium = const TextStyle(
     fontSize: 28,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w700,
     letterSpacing: 0,
     height: 36 / 28,
   );
 
   static TextStyle headlineSmall = const TextStyle(
     fontSize: 24,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w700,
     letterSpacing: 0,
     height: 32 / 24,
   );
@@ -52,27 +52,56 @@ class AppTextStyle {
   // ==================== Title TextStyle ====================
 
   static TextStyle titleLarge = const TextStyle(
-    fontSize: 22,
-    fontWeight: FontWeight.w400,
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
     letterSpacing: 0,
-    height: 28 / 22,
+    height: 26 / 20,
   );
+
+
+
+  static TextStyle titleGreen20 = const TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: Color(0xFF006400),
+    letterSpacing: 0,
+  );
+
+  static TextStyle title18 = const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0,
+  );
+
 
   static TextStyle titleMedium = const TextStyle(
     fontSize: 16,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w700,
     letterSpacing: 0.15,
     height: 24 / 16,
   );
 
   static TextStyle titleSmall = const TextStyle(
     fontSize: 14,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w700,
     letterSpacing: 0.1,
     height: 20 / 14,
   );
 
+  static TextStyle title12 = const TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.1,
+    height: 18 / 12,
+  );
   // ==================== Body TextStyle ====================
+
+  static TextStyle body18 = const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.5,
+    height: 24 / 18,
+  );
 
   static TextStyle bodyLarge = const TextStyle(
     fontSize: 16,
@@ -97,10 +126,18 @@ class AppTextStyle {
 
   // ==================== Label TextStyle ====================
 
+
   static TextStyle labelLarge = const TextStyle(
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.5,
+    height: 22 / 18,
+  );
+
+  static TextStyle label14 = const TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0.4,
     height: 20 / 14,
   );
 
@@ -140,15 +177,15 @@ class AppTextStyle {
       fontFamily: Config.fontFamily,
       displayColor: const Color(0xFFFFFFFF),
       //.withOpacity(0.8),
-      bodyColor: const Color(0xFFFFFFFF)
+      bodyColor: const Color(0xFFA9A9A9)
       //.withOpacity(0.8),
       );
 
   static TextTheme get light => textTheme.apply(
       fontFamily: Config.fontFamily,
-      displayColor: const Color(0xFF000000),
+      displayColor: const Color(0xFF006400),
       //.withOpacity(0.8),
-      bodyColor: const Color(0xFF000000)
+      bodyColor: const Color(0xFF212121)
       //.withOpacity(0.8),
       );
 }

@@ -84,3 +84,8 @@ class AppColor {
   //       surfaceTint: Color(0xFFBAC3FF),
   //     );
 }
+
+const primaryColor = Color(0xFF006400);
+const greenLightColor = Color(0xFFE5FFE5);
+const backgroundGreenlight = Color(0xFFF5FFF5);
+const greenHighlightColor = Color(0xFF32CD32);
