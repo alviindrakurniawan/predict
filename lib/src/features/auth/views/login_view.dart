@@ -6,9 +6,10 @@ import 'package:scora/src/features/auth/auth.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:scora/src/features/auth/services/auth_service.dart';
+import 'package:scora/src/features/auth/views/signup_otp_view.dart';
 import 'package:scora/src/features/features.dart';
 import 'package:scora/src/shared/functions/common_function.dart';
-import 'package:scora/src/shared/providers/remember_me.dart';
+import 'dart:developer' as developer;
 import 'package:scora/src/shared/shared.dart';
 import '../../../core/core.dart';
 
@@ -16,8 +17,6 @@ class LoginView extends HookConsumerWidget {
   const LoginView({super.key});
 
   static const routeName = '/login';
-
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,27 +30,30 @@ class LoginView extends HookConsumerWidget {
     final passwordFocusNode = useFocusNode();
     final obsPass = useState(true);
 
-    final rememberMe = useState(false);
+    final rememberMe = useState<bool>(false);
 
     Future<void> _login(BuildContext context, WidgetRef ref,
         {required String email, required String password}) async {
       try {
         final String? deviceToken = await getDeviceToken();
         final result = await ref.read(AuthServiceProvider).login(
-          email: email,
-          password: password,
-          deviceToken: deviceToken ?? "",
-        );
+              email: email,
+              password: password,
+              deviceToken: deviceToken ?? "",
+            );
         if (context.mounted) {
+          // developer.log(result.toString());
           if (result['data'] != null) {
-            ref.read(sessionProviderProvider.notifier)
-            //set token
+            ref
+                .read(sessionProviderProvider.notifier)
+                //set token
                 .set(result['data']['token']);
-            await ref.read(prefProvider).setPref('token', result['data']['token']);
-
+            await ref
+                .read(prefProvider)
+                .setPref('token', result['data']['token']);
             //set remember me
-            if(rememberMe.value = true){
-              ref.read(prefProvider).setPref('rememberMe',true);
+            if (rememberMe.value == true) {
+              ref.read(prefProvider).setPref('rememberMe', true);
             }
 
             context.push(HomeView.routeName);
@@ -67,8 +69,19 @@ class LoginView extends HookConsumerWidget {
           }
         }
       } catch (e) {
+        if (e.toString()== "Exception: An unexpected error occurred: [Please verified email to continue]"){
+            context.push(SignupOtpView.routeName,extra: emailController.text);
+            showFailedSnackbar(
+                context: context,
+                title: 'Login Failed',
+                messsage: 'Please Verify Your Email');
+            ;
+          return null;
+        }
         showFailedSnackbar(
-            context: context, title: 'Login Failed', messsage: '${e.toString()}');
+            context: context,
+            title: 'Login Failed',
+            messsage: '${e.toString()}');
         ;
       }
     }
@@ -124,17 +137,18 @@ class LoginView extends HookConsumerWidget {
                     decoration: const InputDecoration(
                       hintText: 'example@yourdomain.com',
                       hintStyle: TextStyle(color: Colors.grey),
-                      errorStyle: TextStyle(fontSize: 14),                      focusedBorder: UnderlineInputBorder(
+                      errorStyle: TextStyle(fontSize: 14),
+                      focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                            color: Color(0xFF006400)), // Color when focused
+                            color: Color(0xFF006400)),
                       ),
                       enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                              color: Color(0xFF006400)) // Color when unfocused
+                              color: Color(0xFF006400))
                           ),
                       errorBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                            color: Colors.red), // Color when there's an error
+                            color: Colors.red),
                       ),
                     ),
                   ),
@@ -167,16 +181,12 @@ class LoginView extends HookConsumerWidget {
                                 color: Color(0xFF006400)),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color(0xFF006400)),
+                        borderSide: BorderSide(color: Color(0xFF006400)),
                       ),
                       enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color(0xFF006400))
-                          ),
+                          borderSide: BorderSide(color: Color(0xFF006400))),
                       errorBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.red),
+                        borderSide: BorderSide(color: Colors.red),
                       ),
                     ),
                   ),
@@ -197,7 +207,7 @@ class LoginView extends HookConsumerWidget {
                           activeColor: Color(0xFF006400),
                           checkColor: Colors.white,
                           materialTapTargetSize:
-                          MaterialTapTargetSize.shrinkWrap,
+                              MaterialTapTargetSize.shrinkWrap,
                         ),
                       ),
                       SizedBox(width: 8),

@@ -7,7 +7,7 @@ part of 'soccer_tab_results_controller.dart';
 // **************************************************************************
 
 String _$soccerTabResultsControllerHash() =>
-    r'7f28759469e013c5c4757d0b30a9449265281976';
+    r'e2af7b3c2553f452f8fde9ad426cd952a0efa01d';
 
 /// Copied from Dart SDK
 class _SystemHash {

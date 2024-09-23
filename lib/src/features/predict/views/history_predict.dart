@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:scora/src/core/core.dart';
 import 'package:scora/src/features/features.dart';
+import 'package:go_router/go_router.dart';
 import 'dart:developer' as developer;
 
 class HistoryPredict extends HookConsumerWidget {
@@ -15,10 +16,21 @@ class HistoryPredict extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final predictList = ref.watch(historyPredictControllerProvider);
+
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text('History Predict', style: context.headlineSmall),
+      leading: GestureDetector(
+        onTap: () {
+          context.pop(true);
+        },
+        child: Icon(
+          Icons.arrow_back,
+          size: 28,
+        ),
+      ),
       ),
       body: predictList.when(
         data: (predictions)
@@ -36,7 +48,14 @@ class HistoryPredict extends HookConsumerWidget {
             );
           }
 
-          final sorteredPredictions = List.from(predictions)..sort((a,b)=>DateTime.parse(a!.event_date!).compareTo(DateTime.parse(b!.event_date!)));
+
+          developer.log('prediction :${predictions.toString()}');
+          //sorted by event_date
+          final sorteredPredictions = List.from(predictions)..sort((a,b){
+              developer.log("a: ${a}");
+              developer.log("b: ${b}");
+            return DateTime.parse(b!.event_date).compareTo(DateTime.parse(a!.event_date)); });
+          developer.log("sorted predict");
           return SafeArea(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -45,20 +64,19 @@ class HistoryPredict extends HookConsumerWidget {
                   columnWidths: const {
                     0: FlexColumnWidth(1),
                     1: FlexColumnWidth(2),
-                    2: FlexColumnWidth(0.5),
+                    2: FlexColumnWidth(0.6),
                     3: FlexColumnWidth(2),
-                    4: FlexColumnWidth(1),
+                    4: FlexColumnWidth(1.2),
                   },
                   children: sorteredPredictions.map((prediction) {
                     DateTime parsedDate =
                         DateTime.parse(prediction?.event_date ?? '');
                     String formattedDate =
                         DateFormat('dd/MM').format(parsedDate);
-
                     final result = useState<String>('Lose');
-
                     bool isCorrectPrediction = false;
-                    String winTeam = 'Lose';
+                    final winTeam = useState<String>("Lose");
+
 
                     // Check if event_final_result is valid
                     if (prediction?.event_final_result != null &&
@@ -70,14 +88,15 @@ class HistoryPredict extends HookConsumerWidget {
                       int awayScore = int.parse(scores[1]);
 
                       if (homeScore > awayScore) {
-                        winTeam = 'Home';
+                        winTeam.value = 'Home';
                       } else if (homeScore == awayScore) {
-                        winTeam = 'Draw';
+                        winTeam.value = 'Draw';
                       } else {
-                        winTeam = 'Away';
+                        winTeam.value = 'Away';
                       }
 
                       // Check if the prediction correct
+                      developer.log(prediction.prediction);
                       if (prediction.prediction == '1' &&
                           homeScore > awayScore) {
                         isCorrectPrediction = true;
@@ -103,35 +122,39 @@ class HistoryPredict extends HookConsumerWidget {
                           child: Text(
                             formattedDate,
                             style: AppTextStyle.title12,
+                            overflow: TextOverflow.clip,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20),
                           child: Text(
-                            prediction?.event_home_team ?? 'Home Team',
-                            style: winTeam == 'Home'
+                            prediction?.event_home_team?? 'Home Team',
+                            style: winTeam.value == 'Home'
                                 ? AppTextStyle.title12
                                 : AppTextStyle.bodySmall,
+                            overflow: TextOverflow.clip,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          padding: const EdgeInsets.only(top:  20,bottom: 20,left: 5),
                           child: Text(
                             prediction?.event_final_result ?? '-',
                             style: AppTextStyle.title12,
+
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          padding: const EdgeInsets.only(top:  20,bottom: 20,left: 5),
                           child: Text(
                             prediction?.event_away_team ?? 'Away Team',
-                            style: winTeam == 'Away'
+                            style: winTeam.value == 'Away'
                                 ? AppTextStyle.title12
                                 : AppTextStyle.bodySmall,
+                            overflow: TextOverflow.clip,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          padding: const EdgeInsets.only(top:  15,bottom: 15,left: 10),
                           child: Container(
                             padding: const EdgeInsets.all(4.0),
                             decoration: BoxDecoration(
@@ -157,6 +180,7 @@ class HistoryPredict extends HookConsumerWidget {
                                       : isCorrectPrediction
                                           ? Colors.green
                                           : Colors.red,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ),

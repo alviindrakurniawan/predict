@@ -44,8 +44,8 @@ class SignupOtpView extends HookConsumerWidget {
     } catch (e) {
       showFailedSnackbar(
           context: context,
-          title: 'Verify Register OTP Failded',
-          messsage: '${e.toString()}');
+          title: 'Verify Register OTP Failed',
+          messsage: '${e}');
       ;
     }
   }

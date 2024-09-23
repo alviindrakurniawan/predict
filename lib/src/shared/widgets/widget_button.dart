@@ -93,3 +93,43 @@ class CustomLightGreenFilledButton extends StatelessWidget {
     );
   }
 }
+
+class CustomGreyFilledButtom extends StatelessWidget {
+  final String title;
+  final double width;
+  final double height;
+  final VoidCallback? onPressed;
+  final double borderRad;
+
+  const CustomGreyFilledButtom({
+    Key? key,
+    required this.title,
+    required this.onPressed,
+    this.width = double.infinity,
+    this.height = 58,
+    this.borderRad = 50,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8), // Adjust as needed
+      ),
+      child: ElevatedButton(
+          onPressed: onPressed,
+          style: TextButton.styleFrom(
+            backgroundColor: Color(0xFFa9a9a9),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(borderRad),
+            ),
+          ),
+          child: Text(
+            title,
+            style: TextStyle(color: Colors.grey, fontSize: 16),
+          )),
+    );
+  }
+}

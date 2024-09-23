@@ -7,7 +7,7 @@ part of 'selected_date_controller.dart';
 // **************************************************************************
 
 String _$selectedDateControllerHash() =>
-    r'df0b0dea823d81d03424a731200f76748635a7ff';
+    r'293e58a7bf9ec8dca0ea020e3713687e5034f9e2';
 
 /// See also [SelectedDateController].
 @ProviderFor(SelectedDateController)

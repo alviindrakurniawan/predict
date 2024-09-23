@@ -49,7 +49,7 @@ class ProfileController extends _$ProfileController {
 
     }catch(e){
       state = AsyncValue.error(e, StackTrace.current);
-      throw Exception('Failed to edit profile: $e');
+      throw ('Failed to edit profile: $e');
 
     }
   }

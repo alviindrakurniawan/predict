@@ -7,7 +7,7 @@ class SelectedDateController extends _$SelectedDateController{
 
   @override
   DateTime build() {
-    return DateTime.now().toUtc();
+    return DateTime.now();
   }
 
   void setDateTime (DateTime date) {

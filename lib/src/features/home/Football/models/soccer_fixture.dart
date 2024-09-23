@@ -83,8 +83,8 @@ class SoccerFixtureGoalscorer with _$SoccerFixtureGoalscorer {
 class SoccerFixtureSubstitute with _$SoccerFixtureSubstitute {
   const factory SoccerFixtureSubstitute({
     String? time,
-    dynamic home_scorer, // Can be List or SoccerFixtureScorer
-    dynamic away_scorer, // Can be List or SoccerFixtureScorer
+    dynamic home_scorer,
+    dynamic away_scorer,
     String? score,
   }) = _SoccerFixtureSubstitute;
 
@@ -100,11 +100,12 @@ dynamic _parseScorer(dynamic scorerData) {
   if (scorerData is Map<String, dynamic>) {
     return SoccerFixtureScorer.fromJson(scorerData);
   } else if (scorerData is List) {
-    return scorerData; // Keep it as a List if it's already one
+    return scorerData;
   }
 
   return null;
 }
+
 
 @freezed
 class SoccerFixtureScorer with _$SoccerFixtureScorer {

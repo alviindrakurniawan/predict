@@ -13,4 +13,6 @@ class SearchNotifier extends AutoDisposeNotifier<String> {
   }
 
   void set(String value) => state = value;
+
+  void reset()=> state="";
 }

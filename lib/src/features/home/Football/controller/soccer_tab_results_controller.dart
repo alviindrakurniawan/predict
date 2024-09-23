@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scora/src/features/home/controllers/selected_date_controller.dart';
-import 'package:scora/src/features/home/models/soccer_fixture.dart';
+import 'package:scora/src/features/home/Football/models/soccer_fixture.dart';
 import 'package:scora/src/features/home/services/soccer2_service.dart';
 import 'package:collection/collection.dart';
 import 'dart:developer' as developer;
@@ -19,8 +19,8 @@ class SoccerTabResultsController extends _$SoccerTabResultsController {
       String leagueId) async {
     state = const AsyncValue.loading();
     try {
-      final yesterday = DateTime.now().toUtc().subtract(Duration(days: 1));
-      final lastWeek = DateTime.now().toUtc().subtract(Duration(days: 7));
+      final yesterday = DateTime.now().subtract(Duration(days: 1));
+      final lastWeek = DateTime.now().subtract(Duration(days: 7));
 
       final stringYesterday = DateFormat('yyyy-MM-dd').format(yesterday);
       final stringLastWeek = DateFormat('yyyy-MM-dd').format(lastWeek);
@@ -56,7 +56,6 @@ class SoccerTabResultsController extends _$SoccerTabResultsController {
         state = AsyncValue.data(groupedByLeague);
         return groupedByLeague;
       } else {
-        // Handle the case where 'result' is missing or not a List
         state = AsyncValue.data({});
         return {};
       }

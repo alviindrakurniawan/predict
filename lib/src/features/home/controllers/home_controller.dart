@@ -7,7 +7,7 @@ class Match {
 }
 
 class HomeControllerNotifier extends AutoDisposeNotifier<Map<DateTime, List<Match>>> {
-  DateTime _selectedDate = DateTime.now().toUtc();
+  DateTime _selectedDate = DateTime.now();
 
   DateTime get selectedDate => _selectedDate;
 

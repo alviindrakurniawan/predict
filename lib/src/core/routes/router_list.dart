@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:scora/src/features/auth/views/create_new_password.dart';
 import 'package:scora/src/features/auth/views/signup_otp_view.dart';
 import 'package:scora/src/features/home/Football/views/soccer_predict_view.dart';
+import 'package:scora/src/features/home/Football/views/soccer_summary_view.dart';
 import 'package:scora/src/features/home/views/detail_league.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,7 +11,9 @@ import 'package:scora/src/features/home/views/league_overview.dart';
 import 'package:scora/src/features/home/views/search_view.dart';
 import 'package:scora/src/features/leaderboard/views/leaderboard_view.dart';
 import 'package:scora/src/features/predict/views/history_predict.dart';
+import 'package:scora/src/features/predict/views/predict_view.dart';
 import 'package:scora/src/features/profile/models/user_model.dart';
+import 'package:scora/src/features/profile/views/about_us_view.dart';
 import 'package:scora/src/features/profile/views/edit_profile_view.dart';
 import 'package:scora/src/features/profile/views/referral_view.dart';
 import 'package:scora/src/features/task/views/task_view.dart';
@@ -108,6 +111,14 @@ final GoRouter appRouter = GoRouter(
     ),
     goRoute(
       parentNavigatorKey: _rootKey,
+      path: SoccerSummaryView.routeName,
+      child: (context, state) {
+        final matchId = state.extra as String;
+        return SoccerSummaryView(matchId: matchId);
+      },
+    ),
+    goRoute(
+      parentNavigatorKey: _rootKey,
       path: InputWalletView.routeName,
       child: (context, state) => const InputWalletView(),
     ),
@@ -135,6 +146,16 @@ final GoRouter appRouter = GoRouter(
       path: SearchView.routeName,
       child: (context, state) => const SearchView(),
     ),
+    goRoute(
+      parentNavigatorKey: _rootKey,
+      path: HistoryPredict.routeName,
+      child: (context, state) =>  HistoryPredict(),
+    ),
+    goRoute(
+      parentNavigatorKey: _rootKey,
+      path: AboutUsView.routeName,
+      child: (context, state) =>  AboutUsView(),
+    ),
     shellRoute(
       parentNavigatorKey: _rootKey,
       navigatorKey: _shellNavKey,
@@ -147,8 +168,8 @@ final GoRouter appRouter = GoRouter(
         ),
         goRoute(
           parentNavigatorKey: _shellNavKey,
-          path: HistoryPredict.routeName,
-          child: (context, state) =>  HistoryPredict(),
+          path: PredictView.routeName,
+          child: (context, state) =>  PredictView(),
         ),
         goRoute(
           parentNavigatorKey: _shellNavKey,

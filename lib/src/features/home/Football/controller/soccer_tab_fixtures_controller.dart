@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scora/src/features/home/controllers/selected_date_controller.dart';
-import 'package:scora/src/features/home/models/soccer_fixture.dart';
+import 'package:scora/src/features/home/Football/models/soccer_fixture.dart';
 import 'package:scora/src/features/home/services/soccer2_service.dart';
 import 'package:collection/collection.dart';
 import 'dart:developer' as developer;
@@ -19,7 +19,7 @@ class SoccerTabFixturesController extends _$SoccerTabFixturesController {
       String leagueId) async {
     state = const AsyncValue.loading();
     try {
-      final today = DateTime.now().toUtc();
+      final today = DateTime.now();
       final tomorrow = today.add(Duration(days: 1));
 
       final stringToday = DateFormat('yyyy-MM-dd').format(today);

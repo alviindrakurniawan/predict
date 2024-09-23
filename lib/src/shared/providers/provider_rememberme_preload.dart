@@ -11,12 +11,12 @@ import 'package:scora/src/shared/services/preferences_service.dart';
 //   return true;
 // });
 
-final rememberMePreloadProvider = AutoDisposeFutureProviderFamily<bool,String>((ref,value) async {
+final rememberMePreloadProvider = AutoDisposeFutureProviderFamily<bool,bool>((ref,value) async {
   try {
     final getRememberMe = await ref.read(prefProvider).getPref('rememberMe', false);
 
 
-    await ref.read(sessionProviderProvider.notifier).set(getRememberMe);
+    await ref.read(rememberMeProvider.notifier).set(getRememberMe);
     return getRememberMe;
   } catch (e) {
     rethrow;

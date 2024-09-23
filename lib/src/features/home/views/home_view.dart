@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:scora/main.dart';
+import 'package:scora/src/core/core.dart';
+import 'package:scora/src/features/features.dart';
 import 'package:scora/src/features/home/controllers/fixture_controller.dart';
 import 'package:scora/src/features/home/controllers/selected_date_controller.dart';
+import 'package:scora/src/features/home/controllers/soccer_fixture_controller.dart';
 import 'package:scora/src/features/home/views/components/date_timeline.dart';
 import 'package:scora/src/features/home/views/components/list_soccer_league.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scora/src/features/home/views/search_view.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class HomeView extends HookConsumerWidget {
   const HomeView({super.key});
@@ -23,12 +28,15 @@ class HomeView extends HookConsumerWidget {
     final selectedDate = ref.read(selectedDateControllerProvider.notifier);
     final isLive = useState<bool>(false);
 
+    final user = ref.watch(profileControllerProvider);
+
     void handleLiveChange(bool live) {
       isLive.value = live;
     }
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 70,
         backgroundColor: Colors.white,
         scrolledUnderElevation: 0.0,
         elevation: 0,
@@ -55,11 +63,66 @@ class HomeView extends HookConsumerWidget {
             },
             icon: const Icon(Icons.search, size: 32),
           ),
+          user.when(
+              data: (user) => Container(
+                    height: 35,
+                    padding: EdgeInsets.symmetric(horizontal: 19, vertical: 8),
+                    margin: EdgeInsets.only(right: 24, left: 20),
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '${user?.predictToken.toString() ?? "0"} Points',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                  ),
+              error: (error, stack) => Container(
+                height: 35,
+                padding: EdgeInsets.symmetric(horizontal: 19, vertical: 8),
+                margin: EdgeInsets.only(right: 24, left: 20),
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "-",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                  ),
+              loading: () => Container(
+                height: 35,
+                padding: EdgeInsets.symmetric(horizontal: 19, vertical: 8),
+                margin: EdgeInsets.only(right: 24, left: 20),
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ))
         ],
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(70.0), // Adjust the height as needed
+          preferredSize: Size.fromHeight(70.0),
           child: Padding(
-            padding: const EdgeInsets.all(16.0), // Adjust padding as needed
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,

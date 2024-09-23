@@ -5,8 +5,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scora/src/core/core.dart';
-import 'package:scora/src/features/home/Football/views/components/tab_fixtures.dart';
-import 'package:scora/src/features/home/Football/views/components/tab_result.dart';
+import 'package:scora/src/features/home/Football/views/tab_fixtures.dart';
+import 'package:scora/src/features/home/Football/views/tab_result.dart';
 import 'package:scora/src/shared/dto/soccer_league_dto.dart';
 
 class SoccerDetailLeague extends HookConsumerWidget {

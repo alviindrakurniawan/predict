@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scora/src/features/home/controllers/soccer_fixture_controller.dart';
-import 'package:scora/src/features/home/models/soccer_fixture.dart';
+import 'package:scora/src/features/home/Football/models/soccer_fixture.dart';
 import 'package:scora/src/features/home/views/components/league_card.dart';
 import 'package:scora/src/features/home/views/league_overview.dart';
 import 'package:scora/src/shared/dto/soccer_overview_dto.dart';
 import 'dart:developer' as developer;
+
+import 'package:scora/src/shared/providers/timezone_provider.dart';
 
 class ListSoccerLeague extends ConsumerWidget {
   const ListSoccerLeague({
@@ -18,9 +20,9 @@ class ListSoccerLeague extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final soccerFixtureState = ref.watch(soccerFixtureControllerProvider);
     final size = MediaQuery.of(context).size;
-
     return soccerFixtureState.when(
       data: (mapListFixtures) {
+        developer.log('jumlah fixture: ${mapListFixtures.length.toString()} ');
         if (mapListFixtures.isEmpty) {
           return Container(
               width: double.infinity,
@@ -32,9 +34,10 @@ class ListSoccerLeague extends ConsumerWidget {
           itemCount: mapListFixtures.keys.length,
           itemBuilder: (context, index) {
             final title = mapListFixtures.keys.elementAt(index);
-            developer.log('title: $title');
+            final leagueName = title.split('+').first;
             final List<SoccerFixtureResult> listFixture =
                 mapListFixtures[title]!;
+
 
             // final List<MatchDetails> listMatch = listFixture
             //     .map((match) => MatchDetails(
@@ -53,16 +56,17 @@ class ListSoccerLeague extends ConsumerWidget {
                 homeTeam: match.event_home_team ?? "-",
                 awayTeam: match.event_away_team ?? "-",
                 matchId: match.event_key.toString(),
+                event_status: '${match.event_status.toString()}',
+                event_live: match.event_live,
                 backgroundColor:
                     index % 2 == 0 ? Colors.white : Color(0xFFF8F9FA),
                 score: match.event_final_result ?? "-",
               );
             });
-            developer.log('logo ${listFixture[0].league_logo}');
             return Container(
               margin: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               child: MatchCard(
-                  title: title,
+                  title: leagueName,
                   predict: true,
                   leagueLogo: listFixture[0].league_logo ?? "",
                   onPressedIcon: () {
@@ -85,7 +89,7 @@ class ListSoccerLeague extends ConsumerWidget {
           decoration: BoxDecoration(color: Color(0xFFF8F9FA)),
           child: Center(
               child: Text(
-            'Server error, please try again later ',
+            '$error',
             style: context.titleSmall,
             textAlign: TextAlign.justify,
           ))),

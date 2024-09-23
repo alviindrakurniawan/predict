@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scora/src/features/features.dart';
-import 'package:scora/src/features/home/models/soccer_fixture.dart';
+import 'package:scora/src/features/home/Football/models/soccer_fixture.dart';
 import 'package:scora/src/features/home/services/soccer2_service.dart';
 import 'package:scora/src/features/predict/services/prediction_service.dart';
 import 'dart:developer' as developer;
@@ -27,8 +27,13 @@ class HistoryPredictController extends _$HistoryPredictController {
         final List<Future<SoccerFixtureResult?>> fixtureFutures = historyPredict.map((prediction) async {
           try {
             final fixtureResponse = await fixtureService.getFixtureByMatchId(matchId: prediction!.matchId);
+            if(fixtureResponse['result'][0] == null) {
+
+              return null;
+            }
             var fixtureResult = SoccerFixtureResult.fromJson(fixtureResponse['result'][0]);
 
+            developer.log('Fixture Result: $fixtureResult');
             // Insert prediction into fixture result
             return fixtureResult.copyWith(
               prediction: prediction.prediction.toString(),
@@ -36,10 +41,15 @@ class HistoryPredictController extends _$HistoryPredictController {
           } catch (e) {
             return null;
           }
+
         }).toList();
+        developer.log('PPPPP  ${fixtureFutures.length.toString()}');
+
 
         // Wait for all the futures to complete
-        final List<SoccerFixtureResult?> historyPredictFixtures = await Future.wait(fixtureFutures);
+        final List<SoccerFixtureResult?> historyPredictFixtures = (await Future.wait(fixtureFutures))
+            .where((fixture) => fixture != null)
+            .toList();
 
         state = AsyncValue.data(historyPredictFixtures);
         return historyPredictFixtures;
@@ -49,7 +59,7 @@ class HistoryPredictController extends _$HistoryPredictController {
       }
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
-      throw Exception('Failed to load history predict: $e');
+      throw ('Failed to load history predict: $e');
     }
   }
 }

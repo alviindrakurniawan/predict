@@ -7,7 +7,7 @@ part of 'soccer_prediction_send_predict_controller.dart';
 // **************************************************************************
 
 String _$soccerPredictionSendPredictControllerHash() =>
-    r'b36b7f9bbf178cc38a1e3b3e66405c51c817be07';
+    r'be6bbc8e5fff81ab9f09a341b6aff980d7ce15b1';
 
 /// See also [SoccerPredictionSendPredictController].
 @ProviderFor(SoccerPredictionSendPredictController)

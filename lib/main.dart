@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -29,11 +29,16 @@ void setDeviceOrientation({up = true, down = true, left = true, right = true}) {
 
 void main() async {
   late GoRouter globalRouter;
+  // final initAdFuture = MobileAds.instance.initialize();
+  // final adMobService = AdMobService(initAdFuture);
+
 
   WidgetsFlutterBinding.ensureInitialized();
   // unawaited(MobileAds.instance.initialize());
   // MobileAds.instance.initialize();
   setDeviceOrientation();
+
+  await MobileAds.instance.initialize();
   await dotenv.load(fileName: ".env");
 
   runApp(

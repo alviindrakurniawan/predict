@@ -14,6 +14,7 @@ import 'package:scora/src/shared/shared.dart';
 import '../../../core/core.dart';
 import 'package:go_router/go_router.dart';
 import 'package:exposed/extensions/extensions.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class EditProfileView extends HookConsumerWidget {
   final UserModel? userModel;
@@ -35,6 +36,7 @@ class EditProfileView extends HookConsumerWidget {
     final size = MediaQuery.of(context).size;
 
     final fullNameController = useTextEditingController();
+    final usernameController = useTextEditingController();
     final phoneNumberController = useTextEditingController();
     final dateOfBirthController = useTextEditingController();
     final countryController = useTextEditingController();
@@ -44,7 +46,7 @@ class EditProfileView extends HookConsumerWidget {
     final formKey = useMemoized(GlobalKey<FormState>.new);
 
     final selectedDate = useState<DateTime?>(null);
-    final selectedCountryId = useState<String>(''); // Store selected country ID
+    final selectedCountryId = useState<String>('');
     final photoUrl = useState<String>('');
     final countriesMap = convertListToMap(countriesData);
 
@@ -65,6 +67,43 @@ class EditProfileView extends HookConsumerWidget {
       );
     }
 
+    void _showPhotoProfilePicker(
+        {required BuildContext context, }) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text('Please Pick Your Avatar'),
+              content: Container(
+                margin: EdgeInsets.only(top: 16),
+                width: double.infinity,
+                // height: size.height*0.4,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+
+                      child: photoUrl.value.isEmpty
+                          ? Icon(Icons.person,
+                          size: 30, color: Colors.white)
+                          : null,
+                      backgroundImage: photoUrl.value.isNotEmpty
+                          ? NetworkImage(photoUrl.value)
+                          : null,
+                    )
+
+
+
+
+
+                  ],
+                ),
+              ),
+
+            );
+          });
+    }
 
     void _showDobPicker() {
       showModalBottomSheet(
@@ -77,17 +116,15 @@ class EditProfileView extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
-                  padding:
-                  EdgeInsets.only(right: 10, top: 10),
+                  padding: EdgeInsets.only(right: 10, top: 10),
                   child: TextButton(
                     child: Text(
                       'Done',
-                      style: TextStyle(
-                          color: Colors.blue, fontSize: 18),
+                      style: TextStyle(color: Colors.blue, fontSize: 18),
                     ),
                     onPressed: () {
                       dateOfBirthController.text =
-                      "${selectedDate.value!.day}/${selectedDate.value!.month}/${selectedDate.value!.year}";
+                          "${selectedDate.value!.day}/${selectedDate.value!.month}/${selectedDate.value!.year}";
                       context.pop(true);
                     },
                   ),
@@ -95,9 +132,9 @@ class EditProfileView extends HookConsumerWidget {
                 Expanded(
                   child: CupertinoDatePicker(
                     dateOrder: DatePickerDateOrder.dmy,
-                    initialDateTime: selectedDate.value ??
-                        DateTime.now().toUtc(),
-                    maximumDate: DateTime.now().toUtc(),
+                    initialDateTime:
+                        selectedDate.value ?? DateTime.now(),
+                    maximumDate: DateTime.now(),
                     mode: CupertinoDatePickerMode.date,
                     itemExtent: 60,
                     onDateTimeChanged: (DateTime newDate) {
@@ -150,6 +187,7 @@ class EditProfileView extends HookConsumerWidget {
       selectedDate.value =
           userModel?.dob != null ? DateTime.parse(userModel!.dob ?? "") : null;
       dateOfBirthController.text = userModel?.dob ?? '';
+      usernameController.text = userModel?.username??'';
 
       if (userModel?.countryId != null) {
         selectedCountryId.value = userModel!.countryId.toString();
@@ -212,6 +250,7 @@ class EditProfileView extends HookConsumerWidget {
                           right: 0,
                           child: GestureDetector(
                             onTap: () {
+                              _showPhotoProfilePicker(context: context);
                               // controller.selectMultipleImage();
                               // controller.openImagePicker();
                             },
@@ -251,6 +290,31 @@ class EditProfileView extends HookConsumerWidget {
                           borderSide: BorderSide(color: Color(0xFF006400)),
                         ),
                         enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF006400)),
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: Gap.m),
+                    Text("Username", style: context.titleMedium),
+                    TextFormField(
+                      controller: usernameController,
+                      keyboardType: TextInputType.text,
+                      style: AppTextStyle.titleLargeGrey,
+                      enabled: false,
+                      decoration: const InputDecoration(
+                        hintText: 'username',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        errorStyle: TextStyle(fontSize: 14),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF006400)),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF006400)),
+                        ),
+                        disabledBorder:UnderlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFF006400)),
                         ),
                         errorBorder: UnderlineInputBorder(

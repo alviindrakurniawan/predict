@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:scora/src/core/core.dart';
 import 'package:scora/src/features/home/Football/controller/soccer_tab_fixtures_controller.dart';
 import 'package:scora/src/features/home/Football/controller/soccer_tab_results_controller.dart';
-import 'package:scora/src/features/home/models/soccer_fixture.dart';
+import 'package:scora/src/features/home/Football/models/soccer_fixture.dart';
 import 'package:scora/src/features/home/views/components/league_card.dart';
 
 class TabResult extends HookConsumerWidget {

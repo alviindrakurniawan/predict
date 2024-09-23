@@ -10,6 +10,7 @@ import 'package:scora/src/features/home/controllers/soccer_fixture_controller.da
 import 'package:scora/src/features/home/views/components/date_timeline.dart';
 import 'package:scora/src/features/home/views/components/list_soccer_league.dart';
 import 'package:scora/src/shared/providers/provider_search.dart';
+import 'dart:developer' as developer;
 
 class SearchView extends HookConsumerWidget {
   const SearchView({super.key});
@@ -28,17 +29,20 @@ class SearchView extends HookConsumerWidget {
       isLive.value = live;
     }
 
-    useEffect((){
+    useEffect(() {
       focusNode.requestFocus();
       return null;
-    },[]);
+    }, []);
 
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         toolbarHeight: 60,
         leading: GestureDetector(
-          onTap: (){context.pop(true);},
+          onTap: () {
+            context.pop(true);
+            ref.read(soccerFixtureControllerProvider.notifier).searchLeague("");
+          },
           child: Icon(
             Icons.arrow_back,
             size: 28,
@@ -51,11 +55,13 @@ class SearchView extends HookConsumerWidget {
           child: TextFormField(
             controller: searchController,
             focusNode: focusNode,
-            onChanged: (value){
+            onChanged: (value) {
               debounceTimer.value?.cancel();
-              debounceTimer.value = Timer(Duration(milliseconds: 500), (){
-                ref.read(searchProvider.notifier).set(value);
-                ref.read(soccerFixtureControllerProvider.notifier).searchLeague(value);
+              debounceTimer.value = Timer(Duration(milliseconds: 300), () {
+                ref.watch(searchProvider.notifier).set(value);
+                ref
+                    .watch(soccerFixtureControllerProvider.notifier)
+                    .searchLeague(value);
               });
             },
             decoration: const InputDecoration(

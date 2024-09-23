@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,14 +29,22 @@ class NetworkService3rdParty2 {
       'APIkey': key,
       if (queryParams != null) ...queryParams,
     });
-    final response = await http.get(
-      uri,
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
 
-    return _handleResponse(response);
+    try{
+      final response = await http.get(
+        uri,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      return _handleResponse(response);
+    }on SocketException {
+      throw 'No internet connection. Please check your network.';
+    } catch (e) {
+      throw '$e';
+    }
+
   }
 
   Future<Map<String, dynamic>> put(

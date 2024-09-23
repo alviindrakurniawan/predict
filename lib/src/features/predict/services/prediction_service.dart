@@ -1,15 +1,16 @@
 import 'package:http/http.dart' as http;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:scora/src/shared/services/network_feature_service.dart';
 import 'package:scora/src/shared/shared.dart';
 
 final PredictionServiceProvider =
     Provider.autoDispose<PredictionService>((ref) {
-  final networkService = ref.watch(NetworkAuthServiceProvider);
+  final networkService = ref.watch(NetworkFeatureServiceProvider);
   return PredictionService(networkService: networkService);
 });
 
 class PredictionService {
-  final NetworkAuthService networkService;
+  final NetworkFeatureService networkService;
 
   PredictionService({required this.networkService});
 
@@ -36,7 +37,7 @@ class PredictionService {
   }
 
   Future<Map<String, dynamic>> getPredictionList(
-      {String page = "1", String limit = "1000"}) async {
+      {String page = "1", String limit = "5"}) async {
     final response = await networkService.get(
       '/prediction/prediction-list',
       queryParams: {

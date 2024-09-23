@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scora/src/core/core.dart';
 import 'package:scora/src/features/home/Football/views/soccer_predict_view.dart';
-import 'package:scora/src/features/home/models/soccer_fixture.dart';
+import 'package:scora/src/features/home/Football/models/soccer_fixture.dart';
 import 'dart:developer' as developer;
+
+import 'package:scora/src/features/home/Football/views/soccer_summary_view.dart';
 
 class MatchCard extends StatelessWidget {
   final bool withButton;
@@ -35,13 +37,13 @@ class MatchCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: withButton
             ? [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.4),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: Offset(0, 4),
-          )
-        ]
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.4),
+                  spreadRadius: 1,
+                  blurRadius: 4,
+                  offset: Offset(0, 4),
+                )
+              ]
             : null,
         border: withButton
             ? Border.all(color: Color(0xFFEEEEEE))
@@ -61,21 +63,21 @@ class MatchCard extends StatelessWidget {
                 margin: EdgeInsets.only(right: 20),
                 child: leagueLogo.isNotEmpty
                     ? Image.network(
-                  leagueLogo,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Icon(
-                      Icons.sports_soccer,
-                      size: 40,
-                      color: Theme.of(context).primaryColor,
-                    );
-                  },
-                )
+                        leagueLogo,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Icon(
+                            Icons.sports_soccer,
+                            size: 40,
+                            color: Theme.of(context).primaryColor,
+                          );
+                        },
+                      )
                     : Icon(
-                  Icons.sports_soccer,
-                  size: 40,
-                  color: Theme.of(context).primaryColor,
-                ),
+                        Icons.sports_soccer,
+                        size: 40,
+                        color: Theme.of(context).primaryColor,
+                      ),
               ),
               // Title
               Expanded(
@@ -115,47 +117,85 @@ class MatchCard extends StatelessWidget {
               3: FlexColumnWidth(1),
             },
             children: matchDetails.map((match) {
+              final time =
+                  match.event_live != "0" ? "${match.event_status}'" : match.time;
+
               return TableRow(
                 decoration: BoxDecoration(
                   color: match.backgroundColor,
                 ),
                 children: [
                   GestureDetector(
-                    onTap: predict ? () {
-                      context.push(SoccerPredictView.routeName, extra: match
-                          .matchId);
-                    } : null,
+                    onTap: predict
+                        ? () {
+                            developer.log(
+                                'event match: ${match.event_status.toString()}');
+                            if (match.event_status == "") {
+                              context.push(SoccerPredictView.routeName,
+                                  extra: match.matchId);
+                            } else {
+                              context.push(SoccerSummaryView.routeName,
+                                  extra: match.matchId);
+                            }
+                          }
+                        : null,
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 15),
-                      child: Text(match.time, style: AppTextStyle.title12),
+                      child: Text(time ?? "", style: AppTextStyle.title12),
                     ),
                   ),
                   GestureDetector(
-                    onTap: predict ? () {
-                      developer.log('matchId: ${match.matchId}');
-                      context.push(SoccerPredictView.routeName, extra: match
-                          .matchId);
-                    } : null,
+                    onTap: predict
+                        ? () {
+                            developer.log(
+                                'event match: ${match.event_status.toString()}');
+                            if (match.event_status == "") {
+                              context.push(SoccerPredictView.routeName,
+                                  extra: match.matchId);
+                            } else {
+                              context.push(SoccerSummaryView.routeName,
+                                  extra: match.matchId);
+                            }
+                          }
+                        : null,
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 15),
                       child: Text(match.homeTeam, style: AppTextStyle.title12),
                     ),
                   ),
                   GestureDetector(
-                    onTap: predict ? () {
-                      context.push(SoccerPredictView.routeName, extra: match
-                          .matchId);
-                    } : null,
+                    onTap: predict
+                        ? () {
+                            developer.log(
+                                'event match: ${match.event_status.toString()}');
+                            if (match.event_status == "") {
+                              context.push(SoccerPredictView.routeName,
+                                  extra: match.matchId);
+                            } else {
+                              context.push(SoccerSummaryView.routeName,
+                                  extra: match.matchId);
+                            }
+                          }
+                        : null,
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 15),
                       child: Text(match.score, style: AppTextStyle.title12),
                     ),
                   ),
                   GestureDetector(
-                    onTap: predict ? () {
-                      context.push(SoccerPredictView.routeName, extra: match
-                          .matchId);
-                    } : null,
+                    onTap: predict
+                        ? () {
+                            developer.log(
+                                'event match: ${match.event_status.toString()}');
+                            if (match.event_status == "") {
+                              context.push(SoccerPredictView.routeName,
+                                  extra: match.matchId);
+                            } else {
+                              context.push(SoccerSummaryView.routeName,
+                                  extra: match.matchId);
+                            }
+                          }
+                        : null,
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 15),
                       child: Text(match.awayTeam, style: AppTextStyle.title12),
@@ -176,13 +216,18 @@ class MatchDetails {
   final String homeTeam;
   final String awayTeam;
   final String score;
+  final String? event_status;
+  final String? event_live;
   final Color backgroundColor;
   final String? matchId;
 
-  MatchDetails({required this.time,
-    required this.homeTeam,
-    required this.awayTeam,
-    required this.score,
-    required this.backgroundColor,
-    this.matchId});
+  MatchDetails(
+      {required this.time,
+      required this.homeTeam,
+      required this.awayTeam,
+      required this.score,
+      required this.backgroundColor,
+      this.event_live,
+      this.event_status,
+      this.matchId});
 }

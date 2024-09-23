@@ -11,10 +11,12 @@ import 'package:scora/src/features/home/controllers/soccer_fixture_controller.da
 class RectangularDateTimeline extends HookConsumerWidget {
   final DateTime initialFocusDate;
   final Function(bool) onLiveChange;
+  final bool isPredict;
 
   const RectangularDateTimeline({
     required this.initialFocusDate,
     required this.onLiveChange,
+    this.isPredict = false,
   });
 
 
@@ -32,9 +34,10 @@ class RectangularDateTimeline extends HookConsumerWidget {
     final dateController = EasyInfiniteDateTimelineController();
     final changeDate = useState<DateTime>(DateTime.now());
 
-    final today = DateTime.now().toUtc();
+    final today = DateTime.now();
     final minimumDateTime =
         DateTime(today.year, today.month, today.day).subtract(Duration(days: 7));
+    final dateNow = DateTime(today.year, today.month, today.day);
     final maksimumDateTime =
     DateTime(today.year, today.month, today.day).add(Duration(days: 7));
 
@@ -64,7 +67,7 @@ class RectangularDateTimeline extends HookConsumerWidget {
                 Expanded(
                   child: CupertinoDatePicker(
                     dateOrder: DatePickerDateOrder.dmy,
-                    minimumDate: minimumDateTime,
+                    minimumDate: isPredict?dateNow:minimumDateTime,
                     maximumDate: maksimumDateTime,
                     initialDateTime: selectedDateState,
                     mode: CupertinoDatePickerMode.date,
@@ -86,7 +89,7 @@ class RectangularDateTimeline extends HookConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        GestureDetector(
+        isPredict?SizedBox():GestureDetector(
           onTap: () {
             ref.read(isLiveProvider.notifier).state = !isLive;
           },
@@ -107,27 +110,27 @@ class RectangularDateTimeline extends HookConsumerWidget {
                 'Live',
                 style: isLive
                     ? TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      )
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                )
                     : TextStyle(
-                        color: primaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
+                  color: primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
 
               ),
             ),
           ),
         ),
         Container(
-          width: size.width * 0.7,
+          width: isPredict?size.width*0.8:size.width * 0.7,
           child: EasyInfiniteDateTimeLine(
             controller: dateController,
             key: timelineKey,
             selectionMode: const SelectionMode.autoCenter(),
-            firstDate: minimumDateTime,
+            firstDate: isPredict?dateNow:minimumDateTime,
             lastDate: maksimumDateTime,
             showTimelineHeader: false,
             focusDate: selectedDateState,
@@ -145,7 +148,7 @@ class RectangularDateTimeline extends HookConsumerWidget {
               VoidCallback onTap,
             ) {
               return InkResponse(
-                onTap: onTap,
+                onTap: isLive?null:onTap,
                 child: Container(
                   width: 64.0,
                   height: 64.0,
@@ -194,7 +197,7 @@ class RectangularDateTimeline extends HookConsumerWidget {
             },
           ),
         ),
-        SizedBox(width: 8),
+       SizedBox(width: 8),
         GestureDetector(
           onTap: () {
             _showDatePicker(context);

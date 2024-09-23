@@ -70,7 +70,7 @@ class SignupView extends HookConsumerWidget {
                 .setPref('token', result['data']['token']);
 
             //set remember me
-            if(rememberMe.value = true){
+            if(rememberMe.value == true){
               ref.read(rememberMeProvider.notifier).set(true);
             }
             context.push(SignupOtpView.routeName, extra: email);
@@ -307,28 +307,28 @@ class SignupView extends HookConsumerWidget {
                         ),
                       ),
                       SizedBox(height: Gap.m),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: Checkbox(
-                              value: rememberMe.value,
-                              onChanged: (value) {
-                                rememberMe.value = value ?? false;
-                              },
-                              activeColor: Color(0xFF006400),
-                              checkColor: Colors.white,
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          // Spacing between checkbox and text
-                          Text('Remember me', style: context.titleMedium),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisSize: MainAxisSize.min,
+                      //   children: <Widget>[
+                      //     SizedBox(
+                      //       width: 24,
+                      //       height: 24,
+                      //       child: Checkbox(
+                      //         value: rememberMe.value,
+                      //         onChanged: (value) {
+                      //           rememberMe.value = value ?? false;
+                      //         },
+                      //         activeColor: Color(0xFF006400),
+                      //         checkColor: Colors.white,
+                      //         materialTapTargetSize:
+                      //             MaterialTapTargetSize.shrinkWrap,
+                      //       ),
+                      //     ),
+                      //     SizedBox(width: 8),
+                      //     // Spacing between checkbox and text
+                      //     Text('Remember me', style: context.titleMedium),
+                      //   ],
+                      // ),
                       SizedBox(
                         height: 32,
                       ),

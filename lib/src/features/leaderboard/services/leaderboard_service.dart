@@ -21,9 +21,25 @@ class LeaderboardService {
     return response;
   }
 
+  Future<Map<String, dynamic>> getWeeklyLeaderboardCategory() async {
+    final response = await networkService.get(
+      '/leaderboard/weekly-leaderboard-category',
+    );
+
+    return response;
+  }
+
+
   Future<Map<String, dynamic>> getMonthlyLeaderboard() async {
     final response = await networkService.get(
       '/leaderboard/monthly-leaderboard',
+    );
+
+    return response;
+  }
+  Future<Map<String, dynamic>> getMonthlyLeaderboardCategory() async {
+    final response = await networkService.get(
+      '/leaderboard/monthly-leaderboard-category',
     );
 
     return response;
@@ -32,6 +48,13 @@ class LeaderboardService {
   Future<Map<String, dynamic>> getYearlyLeaderboard() async {
     final response = await networkService.get(
       '/leaderboard/yearly-leaderboard',
+    );
+
+    return response;
+  }
+  Future<Map<String, dynamic>> getYearlyLeaderboardCategory() async {
+    final response = await networkService.get(
+    '/leaderboard/yearly-leaderboard-category',
     );
 
     return response;

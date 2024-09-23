@@ -1,4 +1,4 @@
-import 'package:scora/src/features/home/models/soccer_fixture.dart';
+import 'package:scora/src/features/home/Football/models/soccer_fixture.dart';
 import 'package:scora/src/features/home/views/components/league_card.dart';
 
 class SoccerOverviewDTO{

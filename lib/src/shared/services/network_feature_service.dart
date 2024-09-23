@@ -32,9 +32,9 @@ class NetworkFeatureService {
 
       return _handleResponse(response);
     } on SocketException {
-      throw Exception('No internet connection. Please check your network.');
+      throw ('No internet connection. Please check your network.');
     } catch (e) {
-      throw Exception('An unexpected error occurred: $e');
+      throw ('An unexpected error occurred: $e');
     }
   }
 
@@ -50,9 +50,9 @@ class NetworkFeatureService {
       );
       return _handleResponse(response);
     } on SocketException {
-      throw Exception('No internet connection. Please check your network.');
+      throw ('No internet connection. Please check your network.');
     } catch (e) {
-      throw Exception('An unexpected error occurred: $e');
+      throw ('An unexpected error occurred: $e');
     }
   }
 

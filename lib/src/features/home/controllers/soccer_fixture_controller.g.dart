@@ -7,7 +7,7 @@ part of 'soccer_fixture_controller.dart';
 // **************************************************************************
 
 String _$soccerFixtureControllerHash() =>
-    r'5c2416ffc033fe1713e96c8ddcef92198af93031';
+    r'71d1adaa55bbac2ab08c75dc09577569d2589c5b';
 
 /// See also [SoccerFixtureController].
 @ProviderFor(SoccerFixtureController)

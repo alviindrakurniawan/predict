@@ -6,7 +6,7 @@ part of 'fixture_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$fixtureControllerHash() => r'b625c0253ba9d5c6a19a9ad363961de09c06c76c';
+String _$fixtureControllerHash() => r'b44d8875b727674ee90bd9da01010305d23df774';
 
 /// See also [FixtureController].
 @ProviderFor(FixtureController)

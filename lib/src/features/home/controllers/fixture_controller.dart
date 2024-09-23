@@ -84,7 +84,7 @@ class FixtureController extends _$FixtureController {
   List<Fixture> _filterFixtures(List<Fixture> fixtures) {
     return fixtures.where((fixture) {
       final dateEnd = DateTime.parse(fixture.dateEnd ?? '2100-09-18T00:00:00Z');
-      return dateEnd.isAfter(DateTime.now().toUtc());
+      return dateEnd.isAfter(DateTime.now());
     }).toList();
   }
 

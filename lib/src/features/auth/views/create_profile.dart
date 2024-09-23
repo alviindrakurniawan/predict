@@ -34,7 +34,7 @@ class CreateProfileView extends HookConsumerWidget {
     final size = MediaQuery.of(context).size;
 
     final fullNameController = useTextEditingController();
-    final phoneNumberController = useTextEditingController();
+    // final phoneNumberController = useTextEditingController();
     final dateOfBirthController = useTextEditingController();
     final countryController = useTextEditingController();
 
@@ -92,8 +92,8 @@ class CreateProfileView extends HookConsumerWidget {
                   child: CupertinoDatePicker(
                     dateOrder: DatePickerDateOrder.dmy,
                     initialDateTime: selectedDate.value ??
-                        DateTime.now().toUtc(),
-                    maximumDate: DateTime.now().toUtc(),
+                        DateTime.now(),
+                    maximumDate: DateTime.now(),
                     mode: CupertinoDatePickerMode.date,
                     itemExtent: 60,
                     onDateTimeChanged: (DateTime newDate) {

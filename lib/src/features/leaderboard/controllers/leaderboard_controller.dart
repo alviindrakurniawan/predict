@@ -14,13 +14,9 @@ class LeaderboardController extends _$LeaderboardController {
 
   Future<LeaderboardResponse> getWeeklyLeaderboard() async {
     state = const AsyncValue.loading();
-    developer.log("weekly masok");
     try{
     final response = await ref.read(LeaderboardServiceProvider).getWeeklyLeaderboard();
-    developer.log("weekly response $response");
-
     final leaderbordResponse =  LeaderboardResponse.fromJson(response);
-    developer.log("weekly leaderbordResponse $leaderbordResponse");
     state = AsyncValue.data(leaderbordResponse);
     return leaderbordResponse;
 

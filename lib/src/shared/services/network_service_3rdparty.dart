@@ -72,19 +72,19 @@ class NetworkService3rdParty {
       case 201:
         return decodedBody;
       case 400:
-        throw Exception(decodedBody['message']);
+        throw (decodedBody['message']);
       case 401:
-        throw Exception('Token Expired');
+        throw ('Token Expired');
       case 403:
-        throw Exception(decodedBody['message']);
+        throw (decodedBody['message']);
       case 404:
-        throw Exception('Not Found');
+        throw ('Not Found');
       case 500:
-        throw Exception('Internal Server Error');
+        throw ('Internal Server Error');
       case 501:
-        throw Exception('Not Implemented');
+        throw ('Not Implemented');
       default:
-        throw Exception('Error occurred while communicating with server: ${response.statusCode}');
+        throw ('Error occurred while communicating with server: ${response.statusCode}');
     }
   }
 }

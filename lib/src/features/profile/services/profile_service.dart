@@ -42,65 +42,24 @@ class ProfileService {
 
   Future<Map<String, dynamic>> getReferralList() async {
     final response = await networkService.get(
-      '/users/me/referral-list',
-      queryParams: {
-        "page": "1",
-        "limit": "100"
-      }
+        '/users/me/referral-list',
+        queryParams: {
+          "page": "1",
+          "limit": "100"
+        }
     );
 
     return response;
   }
 
-
-
-
-  Future<Map<String, dynamic>> verifyOTP(
-      {required String email, required String otp}) async {
-    final response = await networkService.post(
-      '/auth/verify-forgot-password-otp',
-      {
-        'email': email,
-        'otp': otp,
-      },
+  Future<Map<String, dynamic>> getMasterPhotoProfile() async {
+    final response = await networkService.get(
+        '/master-pfp',
     );
 
     return response;
   }
 
-  Future<Map<String, dynamic>> sendOTPRegister({required String email}) async {
-    final response = await networkService.post(
-      ' /auth/send-otp-register-user',
-      {
-        'email': email,
-      },
-    );
-
-    return response;
-  }
-
-  Future<Map<String, dynamic>> verifyRegisterOTP(
-      {required String email, required String otp}) async {
-    final response = await networkService.post(
-      '/auth/verify-otp-register-user',
-      {
-        'email': email,
-        'otp': otp,
-      },
-    );
-
-    return response;
-  }
-
-  Future<Map<String, dynamic>> resetPassword(
-      {required String email,
-      required String password,
-      required String token}) async {
-    final response = await networkService.post('/auth/create-new-password',
-        {"email": email, "token": token, "password": password});
-
-    return response;
-  }
 
 // void _storeToken (String token) async {
 //   await prefService.setPref('token', token);

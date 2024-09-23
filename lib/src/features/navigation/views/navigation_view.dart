@@ -17,12 +17,11 @@ class NavigationView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      extendBody: true,
-      backgroundColor: Colors.white,
-      body: child,
-      bottomNavigationBar:
-          context.isMobile ? const NavigationBottomNav() : null,
-      // floatingActionButton: const CThemeFAB(),
-    );
+        extendBody: true,
+        backgroundColor: Colors.white,
+        body: child,
+        bottomNavigationBar: const NavigationBottomNav()
+        // floatingActionButton: const CThemeFAB(),
+        );
   }
 }

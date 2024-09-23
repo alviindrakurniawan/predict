@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:scora/src/features/home/controllers/selected_date_controller.dart';
 import 'package:scora/src/features/home/controllers/soccer_fixture_controller.dart';
-import 'package:scora/src/features/home/models/soccer_fixture.dart';
+import 'package:scora/src/features/home/Football/models/soccer_fixture.dart';
 import 'package:scora/src/features/home/views/components/league_card.dart';
 import 'package:scora/src/features/home/views/detail_league.dart';
 import 'package:scora/src/shared/dto/soccer_league_dto.dart';

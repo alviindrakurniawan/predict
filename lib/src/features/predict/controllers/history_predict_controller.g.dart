@@ -7,7 +7,7 @@ part of 'history_predict_controller.dart';
 // **************************************************************************
 
 String _$historyPredictControllerHash() =>
-    r'da213b3b41169542ac6af4994a1cb4c896428c99';
+    r'54e28d06dc320f4ae8c9df6ea8a9745818a1e3fb';
 
 /// See also [HistoryPredictController].
 @ProviderFor(HistoryPredictController)

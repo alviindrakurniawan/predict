@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:scora/src/core/core.dart';
 import 'package:scora/src/features/features.dart';
+import 'package:scora/src/features/predict/views/history_predict.dart';
+import 'package:scora/src/features/profile/views/about_us_view.dart';
 import 'package:scora/src/features/profile/views/edit_profile_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scora/src/features/profile/views/referral_view.dart';
@@ -37,10 +39,14 @@ class ProfileView extends HookConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CustomLightGreenFilledButton(title: "No",width: size.width*0.4, onPressed: () {}),
-                    CustomGreenFilledButton(title: "Yes",width: size.width*0.4, onPressed: () {
+                    CustomGreenFilledButton(title: "Yes",width: size.width*0.4, onPressed: () async{
                       ref.read(sessionProviderProvider.notifier).reset();
                       ref.read(rememberMeProvider.notifier).reset();
+                      await ref.read(prefProvider).removePref('token');
+                      await ref.read(prefProvider).removePref('rememberMe');
+
                       context.go(WelcomeView.routeName);
+
 
                     })
                   ],
@@ -124,20 +130,20 @@ class ProfileView extends HookConsumerWidget {
                             extra: userModel);
                       },
                     ),
-                    _buildMenuItem(
-                      context,
-                      icon: Icons.help_center,
-                      text: 'Help Center',
-                      onTap: () {
-                        // Handle Help Center tap
-                      },
-                    ),
+                    // _buildMenuItem(
+                    //   context,
+                    //   icon: Icons.help_center,
+                    //   text: 'Help Center',
+                    //   onTap: () {
+                    //     // Handle Help Center tap
+                    //   },
+                    // ),
                     _buildMenuItem(
                       context,
                       icon: Icons.info,
-                      text: 'About Scora',
+                      text: 'About Us',
                       onTap: () {
-                        // Handle About Scora tap
+                        context.push(AboutUsView.routeName);
                       },
                     ),
                     _buildMenuItem(
@@ -154,7 +160,7 @@ class ProfileView extends HookConsumerWidget {
                       icon: Icons.history,
                       text: 'History Predict',
                       onTap: () {
-                        // Handle History Predict tap
+                       context.push(HistoryPredict.routeName);
                       },
                     ),
                     _buildMenuItem(

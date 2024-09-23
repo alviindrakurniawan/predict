@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scora/src/features/home/controllers/selected_date_controller.dart';
-import 'package:scora/src/features/home/models/soccer_fixture.dart';
+import 'package:scora/src/features/home/Football/models/soccer_fixture.dart';
 import 'package:scora/src/features/home/services/soccer2_service.dart';
 import 'package:collection/collection.dart';
 import 'dart:developer' as developer;

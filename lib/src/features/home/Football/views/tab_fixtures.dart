@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scora/src/core/core.dart';
 import 'package:scora/src/features/home/Football/controller/soccer_tab_fixtures_controller.dart';
-import 'package:scora/src/features/home/models/soccer_fixture.dart';
+import 'package:scora/src/features/home/Football/models/soccer_fixture.dart';
 import 'package:scora/src/features/home/views/components/league_card.dart';
 import 'dart:developer' as developer;
 
@@ -52,6 +52,7 @@ class TabFixtures extends HookConsumerWidget {
                       homeTeam: match.event_home_team ?? "-",
                       awayTeam: match.event_away_team ?? "-",
                       matchId: match.event_key.toString(),
+                      event_status: match.event_status.toString(),
                       backgroundColor:
                           index % 2 == 0 ? Colors.white : Color(0xFFF8F9FA),
                       score: match.event_final_result ?? "-",

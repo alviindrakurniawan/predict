@@ -58,7 +58,12 @@ class AppTextStyle {
     height: 26 / 20,
   );
 
-
+  static TextStyle titleLargeGrey = const TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0,
+      height: 26 / 20,
+      color: Colors.grey);
 
   static TextStyle titleGreen20 = const TextStyle(
     fontSize: 20,
@@ -72,7 +77,6 @@ class AppTextStyle {
     fontWeight: FontWeight.w700,
     letterSpacing: 0,
   );
-
 
   static TextStyle titleMedium = const TextStyle(
     fontSize: 16,
@@ -94,6 +98,7 @@ class AppTextStyle {
     letterSpacing: 0.1,
     height: 18 / 12,
   );
+
   // ==================== Body TextStyle ====================
 
   static TextStyle body18 = const TextStyle(
@@ -126,12 +131,18 @@ class AppTextStyle {
 
   // ==================== Label TextStyle ====================
 
-
   static TextStyle labelLarge = const TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.5,
     height: 22 / 18,
+  );
+
+  static TextStyle label16 = const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0.4,
+    height: 21 / 16,
   );
 
   static TextStyle label14 = const TextStyle(
@@ -153,6 +164,37 @@ class AppTextStyle {
     fontWeight: FontWeight.w500,
     letterSpacing: 0.5,
     height: 16 / 11,
+  );
+
+  // ==================== 600 TextStyle ====================
+
+  static TextStyle body16W600 = const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.4,
+    color: Color(0xFF212121),
+    height: 21 / 16,
+  );
+  static TextStyle body14W600 = const TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.4,
+    color: Color(0xFF212121),
+    height: 20 / 14,
+  );
+  static TextStyle body12W600 = const TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.4,
+    color: Color(0xFF212121),
+    height: 14 / 12,
+  );
+  static TextStyle body10W600 = const TextStyle(
+    fontSize: 10,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.4,
+    color: Color(0xFF212121),
+    height: 14 / 10,
   );
 
   static TextTheme textTheme = TextTheme(

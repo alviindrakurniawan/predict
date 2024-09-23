@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scora/src/core/core.dart';
 import 'package:scora/src/features/auth/auth.dart';
+import 'package:scora/src/features/auth/views/signup_otp_view.dart';
 import 'package:scora/src/shared/providers/providers.dart';
 
 final NetworkAuthServiceProvider = Provider.autoDispose<NetworkAuthService>((ref)  {
@@ -108,6 +109,8 @@ class NetworkAuthService {
       case 403:
         throw decodedBody['responseMessage'];
       case 404:
+        throw decodedBody['responseMessage'];
+      case 422:
         throw decodedBody['responseMessage'];
       case 409:
         throw decodedBody['responseMessage'];
